@@ -1,3 +1,8 @@
+# ML stuff
+data/
+preprocessing/
+*.h5
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

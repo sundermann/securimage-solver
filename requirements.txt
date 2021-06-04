@@ -1,0 +1,9 @@
+pandas
+plaidbench==0.7.0
+plaidml==0.7.0
+plaidml-keras==0.7.0
+Pillow
+tensorflow=1.14.0
+matplotlib
+h5py==2.10.0
+Flask
