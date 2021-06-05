@@ -3,12 +3,10 @@ os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
 import keras
 
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten, Input
+from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D
 from keras.preprocessing.image import ImageDataGenerator
 import matplotlib.pyplot as plt
-
-N_Data = 100000
 
 img_rows, img_cols = 32, 32
 num_classes = 135
@@ -17,8 +15,8 @@ input_shape = (img_rows, img_cols, 1)
 def train():
     image_gen = ImageDataGenerator(rescale=1./255)
 
-    train_it = image_gen.flow_from_directory("preprocessing2/train", target_size=(img_rows, img_cols), color_mode="grayscale")
-    test_it = image_gen.flow_from_directory("preprocessing2/test", target_size=(img_rows, img_cols), color_mode="grayscale")
+    train_it = image_gen.flow_from_directory("preprocessing/train", target_size=(img_rows, img_cols), color_mode="grayscale")
+    test_it = image_gen.flow_from_directory("preprocessing/test", target_size=(img_rows, img_cols), color_mode="grayscale")
 
     print(train_it.class_indices)
 
@@ -50,7 +48,13 @@ def train():
                         workers=6,
                         epochs=2)
     loss = model.evaluate_generator(test_it, steps=24)
-    model.save('model.h5')
+
+    model.save('model')
+
+    model_json = model.to_json()
+    with open("model.json", "w") as json_file:
+        json_file.write(model_json)
+
     print('Test loss:', loss[0])
     print('Test accuracy:', loss[1])
 
